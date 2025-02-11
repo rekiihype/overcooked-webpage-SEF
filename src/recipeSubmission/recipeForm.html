@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Recipe</title>
+    <link rel="stylesheet" href="recipeForm.css">
+</head>
+<body>
+    <header>
+        <h1>The OverCooked</h1>
+    </header>
+    
+    <form id="recipeForm">
+        <h2>Submit Your Recipe</h2>
+        <label for="recipeName">Recipe Name:</label>
+        <input type="text" id="recipeName" name="recipeName"
+        placeholder="example: Sambal Kentang" required>
+
+        <label for="chefId">Chef ID:</label>
+        <input type="number" id="chefId" name="chefId" 
+        placeholder="example: 101" required>
+
+        <label for="tag">Tag:</label>
+        <input type="text" id="tag" name="tag"
+        placeholder="example: Indonesian, Vegetarian" required>
+
+        <label for="picture">Add Picture:</label>
+        <input type="file" id="picture" name="picture" accept="image/*" required>
+
+        <label for="note">Note:</label>
+        <textarea id="note" name="note"
+        placeholder="example: This is a delicious recipe from the island of Java" required></textarea>
+
+        <label for="details">Details:</label>
+        <textarea id="details" name="details"
+        placeholder="example: Prep time: 10 min, Cook time: 30 min"></textarea>
+
+        <label for="ingredients">Ingredients:</label>
+        <textarea id="ingredients" name="ingredients"
+        placeholder="example: 3 potatoes, 2 bags of smashed chillis" required></textarea>
+
+        <label for="instruction">Instructions:</label>
+        <textarea id="instruction" name="instruction"
+        placeholder="example: 1. Boil potatoes for half an hour. 2. Smash chillis and mix with potatoes." required></textarea>
+
+        <button type="submit">Publish</button>
+    </form>
+
+    <script>
+        document.getElementById("recipeForm").addEventListener("submit", async function(event) {
+            event.preventDefault();
+            const formData = new FormData(this);
+            try {
+                const response = await fetch("submit_recipe.php", {
+                    method: "POST",
+                    body: formData
+                });
+                const result = await response.text();
+                alert(result);
+            } catch (error) {
+                console.error("Error submitting form:", error);
+                alert("An error occurred while submitting the recipe.");
+            }
+        });
+    </script>
+</body>
+</html>
